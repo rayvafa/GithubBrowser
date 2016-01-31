@@ -8,13 +8,17 @@ import React, {
 	TextInput,
 	View,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	ActivityIndicatorIOS
 	} from 'react-native';
 
 class Login extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			showProgress: false
+		};
 	}
 
 	render(){
@@ -41,12 +45,18 @@ class Login extends Component {
 					style={styles.button}>
 					<Text style={styles.buttonText}>Log in</Text>
 				</TouchableHighlight>
+				<ActivityIndicatorIOS
+					animating={this.state.showProgress}
+					size="large"
+					style={styles.loader}
+				/>
 			</View>
 		);
 	}
 
 	onLoginPressed() {
 		console.log('hey hey hey');
+		this.setState({showProgress: true});
 	}
 };
 
@@ -85,6 +95,9 @@ var styles = StyleSheet.create({
 		fontSize: 22,
 		color: '#FFF',
 		alignSelf: 'center'
+	},
+	loader: {
+		marginTop: 20
 	}
 });
 
