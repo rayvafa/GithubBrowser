@@ -11,8 +11,13 @@ import React, {
 	TouchableHighlight
 	} from 'react-native';
 
-var Login = React.createClass({
-	render: function(){
+class Login extends Component {
+
+	constructor(props) {
+		super(props);
+	}
+
+	render(){
 		return (
 			<View style={styles.container}>
 				<Image
@@ -35,7 +40,7 @@ var Login = React.createClass({
 			</View>
 		);
 	}
-});
+};
 
 var styles = StyleSheet.create({
 	container: {
