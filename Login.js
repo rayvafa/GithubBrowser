@@ -55,8 +55,16 @@ class Login extends Component {
 	}
 
 	onLoginPressed() {
-		console.log('hey hey hey');
+		console.log('Login Pressed');
 		this.setState({showProgress: true});
+
+		fetch('https://api.github.com/search/repositories?q=react')
+		.then((response) => {
+				return response.json();
+		}).then((results) => {
+			console.log(results);
+			this.setState({showProgress: false});
+		});
 	}
 };
 
