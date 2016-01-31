@@ -11,6 +11,7 @@ import React, {
 	TouchableHighlight,
 	ActivityIndicatorIOS
 	} from 'react-native';
+var buffer = require('buffer');
 
 class Login extends Component {
 
@@ -55,16 +56,34 @@ class Login extends Component {
 	}
 
 	onLoginPressed() {
-		console.log('Login Pressed');
 		this.setState({showProgress: true});
 
-		fetch('https://api.github.com/search/repositories?q=react')
-		.then((response) => {
+		var b = new buffer.Buffer(this.state.userName + ':' + this.state.password);
+		var encodedAuth = b.toString('base64');
+
+		fetch('https://api.github.com/user', {
+			headers: {
+				'Authorization': 'Basic ' + encodedAuth
+			}
+		}).then((response)=>{
+			console.log(response);
+			if(response.status >= 200 && response.status < 300){
+				return response;
+			}
+			throw {
+				badCredentials: response.status == 401,
+				unknownError: response.status != 401
+			}
+		}).then((response) => {
 				return response.json();
 		}).then((results) => {
 			console.log(results);
 			this.setState({showProgress: false});
-		});
+		}).catch((err) => {
+			this.setState(err);
+		}).finally( () => {
+			this.setState({showProgress: false});
+		})
 	}
 };
 
