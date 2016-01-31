@@ -28,17 +28,25 @@ class Login extends Component {
 				<TextInput
 					style={styles.input}
 					placeholder="Github username"
+					onChangeText={ (text) => this.setState({userName: text}) }
 				/>
 				<TextInput
 					style={styles.input}
 					placeholder="Github password"
-					secureTextEntry="true"
+					secureTextEntry={true}
+					onChangeText={ (text) => this.setState({password: text}) }
 				/>
-				<TouchableHighlight style={styles.button}>
+				<TouchableHighlight
+					onPress={this.onLoginPressed.bind(this) }
+					style={styles.button}>
 					<Text style={styles.buttonText}>Log in</Text>
 				</TouchableHighlight>
 			</View>
 		);
+	}
+
+	onLoginPressed() {
+		console.log('hey hey hey');
 	}
 };
 
