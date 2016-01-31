@@ -17,6 +17,7 @@ var Login = React.createClass({
 					style={styles.logo}
 					source={require('image!Octocat')}
 				/>
+				<Text style={styles.heading} >Github Browser</Text>
 			</View>
 		);
 	}
@@ -32,6 +33,10 @@ var styles = StyleSheet.create({
 	logo: {
 		width: 66,
 		height: 55
+	},
+	heading: {
+		fontSize: 30,
+		marginTop: 10
 	}
 });
 
