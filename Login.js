@@ -7,7 +7,8 @@ import React, {
 	Text,
 	TextInput,
 	View,
-	Image
+	Image,
+	TouchableHighlight
 	} from 'react-native';
 
 var Login = React.createClass({
@@ -28,6 +29,9 @@ var Login = React.createClass({
 					placeholder="Github password"
 					secureTextEntry="true"
 				/>
+				<TouchableHighlight style={styles.button}>
+					<Text style={styles.buttonText}>Log in</Text>
+				</TouchableHighlight>
 			</View>
 		);
 	}
@@ -56,6 +60,18 @@ var styles = StyleSheet.create({
 		fontSize: 18,
 		borderWidth: 1,
 		borderColor: '#48bbec'
+	},
+	button: {
+		height: 50,
+		backgroundColor: '#48BBEC',
+		alignSelf: 'stretch',
+		marginTop: 10,
+		justifyContent: 'center'
+	},
+	buttonText: {
+		fontSize: 22,
+		color: '#FFF',
+		alignSelf: 'center'
 	}
 });
 
