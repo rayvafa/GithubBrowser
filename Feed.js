@@ -17,8 +17,35 @@ class Feed extends Component {
 		});
 
 		this.state = {
-			dataSource: ds.cloneWithRows(['A', 'B', 'C'])
+			dataSource: ds,
+			showProgress: true
 		};
+	}
+
+	componentDidMount(){
+		this.fetchFeed();
+	}
+
+	fetchFeed(){
+		require('./AuthService').getAuthInfo((err, authInfo) => {
+			var url = 'https://api.github.com/users/'
+				+ authInfo.user.login
+				+ '/received_events';
+
+			fetch(url, {
+				header: authInfo.header
+			}).then((response) => {
+				return response.json();
+			}).then((responseData) => {
+				var feedItems = responseData.filter((ev)=> {
+					return ev.type === 'CreateEvent';
+				});
+				this.setState({
+					dataSource: this.state.dataSource.cloneWithRows(feedItems),
+					showProgress: false
+				});
+			})
+		});
 	}
 
 	renderRow(rowData){
@@ -28,7 +55,7 @@ class Feed extends Component {
 					color: '#333',
 					alignSelf: 'center'
 				}}>
-				{rowData}
+				{rowData.actor.login}
 			</Text>
 		);
 	}
