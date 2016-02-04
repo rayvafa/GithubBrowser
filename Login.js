@@ -11,7 +11,6 @@ import React, {
 	TouchableHighlight,
 	ActivityIndicatorIOS
 	} from 'react-native';
-var buffer = require('buffer');
 
 class Login extends Component {
 
@@ -77,7 +76,7 @@ class Login extends Component {
 
 		var authService = require('./AuthService.js');
 		authService.login({
-			username: this.state.username,
+			userName: this.state.userName,
 			password: this.state.password
 		}, (results) => {
 			this.setState(Object.assign({showProgress: false}, results));
