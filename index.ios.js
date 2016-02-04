@@ -12,6 +12,7 @@ import React, {
 	ActivityIndicatorIOS
 	} from 'react-native';
 var Login = require('./Login.js');
+var AppContainer = require('./AppContainer.js');
 var AuthService = require('./AuthService.js');
 
 class GithubBrowser extends Component {
@@ -48,9 +49,7 @@ class GithubBrowser extends Component {
 
 		if(this.state.isLoggedIn){
 			return (
-				<View style={styles.container}>
-					<Text style={styles.welcome}>Logged In!</Text>
-				</View>
+				<AppContainer />
 			);
 		} else {
 			return (
@@ -68,11 +67,15 @@ class GithubBrowser extends Component {
 
 var styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#F5FCFF',
 		flex: 1,
-		paddingTop: 40,
+		justifyContent: 'center',
 		alignItems: 'center',
-		padding: 10
+		backgroundColor: '#F5FCFF'
+	},
+	welcome: {
+		fontSize: 20,
+		textAlign: 'center',
+		margin: 10
 	}
 });
 
