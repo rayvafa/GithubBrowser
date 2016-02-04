@@ -23,6 +23,20 @@ class Login extends Component {
 	}
 
 	render(){
+		var errorCtl = <View />;
+
+		if(!this.state.success && this.state.badCredentials) {
+			errorCtl = <Text style={styles.error} >
+				That username and password combination did not work
+			</Text>;
+		}
+
+		if(!this.state.success && this.state.unknownError) {
+			errorCtl = <Text style={styles.error} >
+				We experienced an unexpected issue
+			</Text>;
+		}
+
 		return (
 			<View style={styles.container}>
 				<Image
@@ -46,6 +60,9 @@ class Login extends Component {
 					style={styles.button}>
 					<Text style={styles.buttonText}>Log in</Text>
 				</TouchableHighlight>
+
+				{errorCtl}
+
 				<ActivityIndicatorIOS
 					animating={this.state.showProgress}
 					size="large"
@@ -78,7 +95,7 @@ class Login extends Component {
 				return response.json();
 		}).then((results) => {
 			console.log(results);
-			this.setState({showProgress: false});
+			this.setState({success: true});
 		}).catch((err) => {
 			this.setState(err);
 		}).finally( () => {
@@ -125,6 +142,10 @@ var styles = StyleSheet.create({
 	},
 	loader: {
 		marginTop: 20
+	},
+	error: {
+		color: 'red',
+		paddingTop: 10
 	}
 });
 
