@@ -5,8 +5,10 @@ import React, {
 	View,
 	Component,
 	ListView,
-	ActivityIndicatorIOS
+	ActivityIndicatorIOS,
+	Image
 	} from 'react-native';
+var moment = require('moment');
 
 class Feed extends Component {
 
@@ -50,14 +52,39 @@ class Feed extends Component {
 	}
 
 	renderRow(rowData) {
+		console.log(rowData);
 		return (
-			<Text
-				style={{
-					color: '#333',
-					alignSelf: 'center'
-				}}>
-				{rowData.actor.login}
-			</Text>
+			<View style={{
+				flex: 1,
+				flexDirection: 'row',
+				padding: 20,
+				alignItems: 'center',
+				borderColor: '#D7D7D7',
+				borderBottomWidth: 1
+			}} >
+				<Image
+					source={{uri: rowData.actor.avatar_url}}
+					style={{
+						height: 36,
+						width: 36,
+						borderRadius: 18
+					}}
+				/>
+				<View style={{paddingLeft: 20}}>
+					<Text style={{backgroundColor: '#fff'}}>
+						{moment(rowData.created_at).fromNow()}
+					</Text>
+					<Text style={{backgroundColor: '#fff'}}>
+						{rowData.actor.login} pushed to
+					</Text>
+					<Text style={{backgroundColor: '#fff'}}>
+						{rowData.payload.ref}
+					</Text>
+					<Text style={{backgroundColor: '#fff'}}>
+						at {rowData.repo.name}
+					</Text>
+				</View>
+			</View>
 		);
 	}
 
