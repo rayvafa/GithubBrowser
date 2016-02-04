@@ -4,7 +4,8 @@ import React, {
 	Text,
 	View,
 	Component,
-	ListView
+	ListView,
+	ActivityIndicatorIOS
 	} from 'react-native';
 
 class Feed extends Component {
@@ -22,11 +23,11 @@ class Feed extends Component {
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount() {
 		this.fetchFeed();
 	}
 
-	fetchFeed(){
+	fetchFeed() {
 		require('./AuthService').getAuthInfo((err, authInfo) => {
 			var url = 'https://api.github.com/users/'
 				+ authInfo.user.login
@@ -48,7 +49,7 @@ class Feed extends Component {
 		});
 	}
 
-	renderRow(rowData){
+	renderRow(rowData) {
 		return (
 			<Text
 				style={{
@@ -60,8 +61,23 @@ class Feed extends Component {
 		);
 	}
 
-	render(){
-		return(
+	render() {
+
+		if (this.state.showProgress) {
+			return (
+				<View style={{
+					flex: 1,
+					justifyContent: 'center'
+				}}>
+					<ActivityIndicatorIOS
+						size='large'
+						animating={true}
+					/>
+				</View>
+			);
+		}
+
+		return (
 			<View style={{
 				flex: 1,
 				justifyContent: 'flex-start'
