@@ -11,6 +11,7 @@ class AuthService {
 				'Authorization': 'Basic ' + encodedAuth
 			}
 		}).then((response)=>{
+			console.log('response type handling');
 			console.log(response);
 			if(response.status >= 200 && response.status < 300){
 				return response;
@@ -22,9 +23,11 @@ class AuthService {
 		}).then((response) => {
 			return response.json();
 		}).then((results) => {
+			console.log('success handling');
 			console.log(results);
 			return cb({success: true});
 		}).catch((err) => {
+			console.log('error handling');
 			return cb(err);
 		})
 	}
