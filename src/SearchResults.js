@@ -7,7 +7,8 @@ import React, {
 	ListView,
 	ActivityIndicatorIOS,
 	TouchableHighlight,
-	Image
+	Image,
+	StyleSheet
 	} from 'react-native';
 
 class SearchResults extends Component {
@@ -29,26 +30,77 @@ class SearchResults extends Component {
 		this.doSearch();
 	}
 
-	doSearch(){
+	doSearch() {
 		var url = 'https://api.github.com/search/repositories?q=' +
 			encodeURIComponent(this.props.searchQuery);
+
+		fetch(url).then(
+			(response)=> response.json()
+		).then((responseData) => {
+				this.setState({
+					repositories: responseData.repositories,
+					dataSource: this.state.dataSource.cloneWithRows(responseData.items)
+				});
+			}
+		).finally(() => {
+				this.setState({
+					showProgress: false
+				});
+			}
+		);
 	}
 
 	renderRow(rowData) {
 		return (
-			<TouchableHighlight
-				underlayColor='#ddd'>
+			<View style={{
+				padding: 20,
+				borderColor: '#D7D7D7',
+				borderBottomWidth: 1,
+				backgroundColor: '#fff'
+			}}>
+				<Text style={{
+					fontSize: 20,
+					fontWeight: '600'
+				}}>
+						{rowData.full_name}
+				</Text>
+
 				<View style={{
 					flex: 1,
 					flexDirection: 'row',
-					padding: 20,
-					alignItems: 'center',
-					borderColor: '#D7D7D7',
-					borderBottomWidth: 1
-				}} >
-
+					justifyContent: 'space-between',
+					marginTop: 20,
+					marginBottom: 20
+				}}>
+					<View style={styles.repoCell}>
+						<Image
+							source={require('image!star')}
+							style={styles.repoCellIcon}>
+						</Image>
+						<Text style={styles.repoCellLabel}>
+							{rowData.stargazers_count}
+						</Text>
+					</View>
+					<View style={styles.repoCell}>
+						<Image
+							source={require('image!fork')}
+							style={styles.repoCellIcon}>
+						</Image>
+						<Text style={styles.repoCellLabel}>
+							{rowData.forks}
+						</Text>
+					</View>
+					<View style={styles.repoCell}>
+						<Image
+							source={require('image!fork')}
+							style={styles.repoCellIcon}>
+						</Image>
+						<Text style={styles.repoCellLabel}>
+							{rowData.open_issues}
+						</Text>
+					</View>
 				</View>
-			</TouchableHighlight>
+			</View>
 		);
 	}
 
@@ -81,5 +133,19 @@ class SearchResults extends Component {
 		);
 	}
 }
+
+var styles = StyleSheet.create({
+	repoCell: {
+		width: 50,
+		alignItems: 'center'
+	},
+	repoCellIcon: {
+		width: 20,
+		height: 20
+	},
+	repoCellLabel: {
+		textAlign: 'center'
+	}
+});
 
 module.exports = SearchResults;
