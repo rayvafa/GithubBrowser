@@ -11,9 +11,9 @@ import React, {
 	View,
 	ActivityIndicatorIOS
 	} from 'react-native';
-var Login = require('./Login.js');
-var AppContainer = require('./AppContainer.js');
-var AuthService = require('./AuthService.js');
+var Login = require('./src/Login.js');
+var AppContainer = require('./src/AppContainer.js');
+var AuthService = require('./src/AuthService.js');
 
 class GithubBrowser extends Component {
 
