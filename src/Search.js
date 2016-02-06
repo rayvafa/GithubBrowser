@@ -8,6 +8,7 @@ import React, {
 	View,
 	TouchableHighlight,
 	} from 'react-native';
+var SearchResults = require('./SearchResults.js');
 
 class Search extends Component {
 
@@ -37,8 +38,15 @@ class Search extends Component {
 
 	onSearchPressed() {
 		console.log('onSearchPressed: ' + this.state.searchQuery);
+		this.props.navigator.push({
+			component: SearchResults,
+			title: 'Results',
+			passProps: {
+				searchQuery: this.state.searchQuery
+			}
+		});
 	}
-};
+}
 
 var styles = StyleSheet.create({
 	container: {
